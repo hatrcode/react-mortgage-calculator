@@ -1,11 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 
 const muiTheme = createTheme({
+  // Change MUI primary color to purple (#9159eb)
   palette: {
     primary: {
       main: "#9159eb",
     },
   },
+  // Update style for MuiSlider
   components: {
     MuiSlider: {
       styleOverrides: {

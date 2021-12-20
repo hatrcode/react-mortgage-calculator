@@ -7,15 +7,23 @@ import useSlider from "../utils/useSlider";
 
 const Calculator = () => {
   const [payment, setPayment] = useState(0);
+
+  // Set slider values
   const purchase = useSlider(0, 1000000, 100, 0, "purchase", "purchase");
   const down = useSlider(0, 1000000, 100, 0, "payment", "payment");
   const time = useSlider(0, 30, 1, 0, "time", "time");
   const interest = useSlider(0, 10, 0.1, 0, "interest", "interest");
+
+  // Calculate the principal loan amount (Purchase Price - Down Payment)
   const loan = purchase.value - down.value;
 
+  // Calculate monthly interest rate by dividing the annual interest rate by 12.
   const r = (interest.value * 0.01) / 12;
+
+  // Loan period * 12 to get the numbers of months
   const n = time.value * 12;
 
+  // Function to calculate montly payment
   const handleClick = useCallback(
     (e) => {
       e.preventDefault();
@@ -27,6 +35,7 @@ const Calculator = () => {
     [loan, n, r]
   );
 
+  // Set monthly payment to 0 when user changes any of the information
   useEffect(() => {
     setPayment(0);
   }, [loan, n, r]);

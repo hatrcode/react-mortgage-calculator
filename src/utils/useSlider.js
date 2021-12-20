@@ -5,7 +5,6 @@ const useSlider = (min, max, step, defaultValue, label, id) => {
 
   const handleChange = (e) => {
     setState(e.target.value);
-    console.log(state);
   };
 
   const props = {
