@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -23,10 +23,13 @@ const Calculator = () => {
         loan * [(r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)]
       );
       setPayment(monthlyPayment);
-      console.log(payment);
     },
-    [loan, n, payment, r]
+    [loan, n, r]
   );
+
+  useEffect(() => {
+    setPayment(0);
+  }, [loan, n, r]);
 
   return (
     <div className="container">
@@ -50,7 +53,10 @@ const Calculator = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <p>
-            Repayment time: <span className="info">{time.value}</span> years
+            Repayment time:{" "}
+            <span className="info">
+              {time.value} {time.value > 1 ? "years" : "year"}
+            </span>
           </p>
           <Slider aria-label="Repayment" {...time} />
         </Grid>
@@ -70,16 +76,20 @@ const Calculator = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <p>Estimated pr. month</p>
-          {payment < 0 ? (
+          {time.value === 0 || interest.value === 0 ? (
+            <p style={{ color: "#eb6059" }}>Please fill in information</p>
+          ) : payment < 0 ? (
             <p style={{ color: "#eb6059" }}>
               Down payment should be smaller than the Purchase price!
             </p>
-          ) : (
+          ) : payment > 0 ? (
             <p>
               <span className="info" style={{ fontSize: "1.2rem" }}>
                 ${payment.toLocaleString()}
               </span>
             </p>
+          ) : (
+            ""
           )}
         </Grid>
       </Grid>
