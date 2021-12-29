@@ -106,7 +106,7 @@ const Calculator = () => {
         variant="contained"
         onClick={handleClick}
         style={{ textTransform: "none" }}>
-        Get a mortage quote
+        Get a mortgage quote
       </Button>
     </div>
   );
